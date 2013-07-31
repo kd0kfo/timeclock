@@ -67,3 +67,9 @@ class Clock:
 
     def get_categories(self):
         return self.categories.keys()
+
+    def get_timestamps(self):
+        all_timestamps = []
+        for times in self.categories.itervalues():
+            all_timestamps.extend(times)
+        return all_timestamps
