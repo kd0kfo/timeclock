@@ -27,6 +27,9 @@ for (opt, optarg) in opts:
         exit(0)
     elif opt in ["p", "print"]:
         clock.print_times()
+        total_time = clock.total_time()
+        print("---")
+        print("Total counted time: {0} seconds ({1:.2f} hrs)".format(total_time, total_time/3600.))
         exit(0)
     elif opt in ["r", "running"]:
         now = get_timestamp()
