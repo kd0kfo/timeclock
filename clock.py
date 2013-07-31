@@ -30,8 +30,10 @@ class Clock:
         if isfile(self.clock_filename):
             self.load(self.clock_filename)
 
-    def print_times(self):
+    def print_times(self, query=None):
         for cat in self.categories:
+            if query and cat != query:
+                continue
             punches = self.categories[cat]
             total_time = 0
             length = len(punches)
@@ -62,3 +64,6 @@ class Clock:
             if len(self.categories[category]) % 2 == 1:
                 running.append((category, self.categories[category][-1]))
         return running
+
+    def get_categories(self):
+        return self.categories.keys()
