@@ -43,6 +43,10 @@ for (opt, optarg) in opts:
         print("Total time span: {0} seconds".format(times[-1] - times[0]))
         exit(0)
 
+if not args:
+    clock.print_times()
+    exit(0)
+
 category = args[0]
 
 clock.punch(category)
