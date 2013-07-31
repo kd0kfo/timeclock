@@ -4,6 +4,7 @@ def get_timestamp():
     import time
     return int(time.time())
 
+
 class Clock:
     def load(self, filename=None):
         if filename:
@@ -34,7 +35,7 @@ class Clock:
             punches = self.categories[cat]
             total_time = 0
             length = len(punches)
-            if length  % 2 != 0:
+            if length % 2 != 0:
                 length -= 1
             idx = 0
             while idx < length:
@@ -56,7 +57,7 @@ class Clock:
 
     def running_tasks(self):
         running = []
-        
+
         for category in self.categories:
             if len(self.categories[category]) % 2 == 1:
                 running.append((category, self.categories[category][-1]))

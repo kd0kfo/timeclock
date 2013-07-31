@@ -31,7 +31,7 @@ for (opt, optarg) in opts:
     elif opt in ["s", "switch"]:
         for task in clock.running_tasks():
             clock.punch(task[0])
-            
+
 category = args[0]
 
 clock.punch(category)
