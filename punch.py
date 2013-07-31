@@ -5,6 +5,14 @@ from sys import argv
 from clock import Clock, get_timestamp
 from getopt import getopt, GetoptError
 
+
+def display_times(_clock):
+    _clock.print_times()
+    total_time = _clock.total_time()
+    print("---")
+    print("Total counted time: {0} seconds ({1:.2f} hrs)".format(total_time, total_time/3600.))
+
+
 CLOCK_FILE = "clock.dat"
 
 clock = Clock(CLOCK_FILE)
@@ -26,10 +34,7 @@ for (opt, optarg) in opts:
         print(", ".join(sorted(clock.get_categories())))
         exit(0)
     elif opt in ["p", "print"]:
-        clock.print_times()
-        total_time = clock.total_time()
-        print("---")
-        print("Total counted time: {0} seconds ({1:.2f} hrs)".format(total_time, total_time/3600.))
+        display_times(clock)
         exit(0)
     elif opt in ["r", "running"]:
         now = get_timestamp()
@@ -47,7 +52,7 @@ for (opt, optarg) in opts:
         exit(0)
 
 if not args:
-    clock.print_times()
+    display_times(clock)
     exit(0)
 
 category = args[0]
