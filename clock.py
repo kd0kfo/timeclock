@@ -30,12 +30,10 @@ class Clock:
         if isfile(self.clock_filename):
             self.load(self.clock_filename)
 
-    def print_times(self, query=None):
-        for cat in self.categories:
-            if query and cat != query:
-                continue
-            punches = self.categories[cat]
-            total_time = 0
+    def total_time(self, category=None):
+        def get_total_time(category):
+            punches = self.categories[category]
+            elapsed_time = 0
             length = len(punches)
             if length % 2 != 0:
                 length -= 1
@@ -43,14 +41,33 @@ class Clock:
             while idx < length:
                 start = punches[idx]
                 stop = punches[idx + 1]
-                total_time += stop - start
+                elapsed_time += stop - start
                 idx += 2
 
             if len(punches) % 2 != 0:
-                total_time += get_timestamp() - punches[-1]
-                suffix = "+ seconds"
+                elapsed_time += get_timestamp() - punches[-1]
+
+            return elapsed_time
+
+        if not category:
+            elapsed_time = 0
+            for cat in self.categories:
+                elapsed_time += get_total_time(cat)
+            return elapsed_time
+        return get_total_time(category)
+
+
+    def print_times(self, query=None):
+        for cat in self.categories:
+            if query and cat != query:
+                continue
+
+            total_time = self.total_time(cat)
+            suffix = str(total_time)
+            if len(self.categories[cat]) % 2 != 0:
+                suffix = "+ seconds ({0:.2f} hrs)".format(total_time/3600.)
             else:
-                suffix = " seconds"
+                suffix = " seconds ({0:.2f} hrs)".format(total_time/3600.)
             print("{0}: {1}{2}".format(cat, total_time, suffix))
 
     def punch(self, category):
