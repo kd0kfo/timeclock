@@ -10,7 +10,8 @@ def display_times(_clock):
     _clock.print_times()
     total_time = _clock.total_time()
     print("---")
-    print("Total counted time: {0} seconds ({1:.2f} hrs)".format(total_time, total_time/3600.))
+    print("Total counted time: {0} seconds ({1:.2f} hrs)"
+          .format(total_time, total_time/3600.))
 
 
 CLOCK_FILE = "clock.dat"

@@ -56,7 +56,6 @@ class Clock:
             return elapsed_time
         return get_total_time(category)
 
-
     def print_times(self, query=None):
         for cat in self.categories:
             if query and cat != query:
