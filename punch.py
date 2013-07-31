@@ -9,7 +9,12 @@ CLOCK_FILE = "clock.dat"
 
 clock = Clock(CLOCK_FILE)
 
-(opts, args) = getopt(argv[1:], "prs", ["print", "running", "switch"])
+try:
+    (opts, args) = getopt(argv[1:], "prs", ["print", "running", "switch"])
+except GetoptError as ge:
+    from sys import stderr
+    stderr.write("Error parsing arguments\n")
+    raise ge
 
 
 for (opt, optarg) in opts:
