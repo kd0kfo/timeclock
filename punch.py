@@ -19,7 +19,7 @@ CLOCK_FILE = "clock.dat"
 clock = Clock(CLOCK_FILE)
 
 short_opts = "cprst"
-long_opts = ["categories", "print", "running", "switch", "total"]
+long_opts = ["categories", "print", "running", "stop", "switch", "total"]
 try:
     (opts, args) = getopt(argv[1:], short_opts, long_opts)
 except GetoptError as ge:
@@ -42,9 +42,11 @@ for (opt, optarg) in opts:
         for task in clock.running_tasks():
             print("{0}: {1} seconds".format(task[0], now - task[1]))
         exit(0)
-    elif opt in ["s", "switch"]:
+    elif opt in ["s", "switch", "stop"]:
         for task in clock.running_tasks():
             clock.punch(task[0])
+        if opt == "stop":
+            exit(0)
     elif opt in ["t", "total"]:
         times = sorted(clock.get_timestamps())
         print("Started on {0}".format(times[0]))
