@@ -7,7 +7,7 @@ from getopt import getopt, GetoptError
 
 
 def display_times(_clock):
-    _clock.print_times()
+    _clock.print_times(alphabetic=True)
     total_time = _clock.total_time()
     print("---")
     print("Total counted time: {0} seconds ({1:.2f} hrs)"
