@@ -18,8 +18,8 @@ CLOCK_FILE = "clock.dat"
 
 clock = Clock(CLOCK_FILE)
 
-short_opts = "cprst"
-long_opts = ["categories", "print", "running", "stop", "switch", "total"]
+short_opts = "hcprst"
+long_opts = ["categories", "help", "print", "running", "stop", "switch", "total"]
 try:
     (opts, args) = getopt(argv[1:], short_opts, long_opts)
 except GetoptError as ge:
@@ -33,6 +33,10 @@ for (opt, optarg) in opts:
         opt = opt[1:]
     if opt in ["c", "categories"]:
         print(", ".join(sorted(clock.get_categories())))
+        exit(0)
+    elif opt in ["h", "help"]:
+        print("Command line arguments: {0}"
+              .format(", ".join(sorted(long_opts))))
         exit(0)
     elif opt in ["p", "print"]:
         display_times(clock)
