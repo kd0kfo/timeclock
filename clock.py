@@ -15,6 +15,8 @@ class Clock:
                 tokens = line.split()
                 if len(tokens) != 2:
                     raise Exception("Broken line: {0}".format(line))
+                if tokens[0][0] == '#':
+                    continue
                 cat = tokens[0]
                 timestamp = int(tokens[1])
                 if not tokens[0] in self.categories:
