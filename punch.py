@@ -17,9 +17,10 @@ def display_times(_clock):
 CLOCK_FILE = "clock.dat"
 
 clock = Clock(CLOCK_FILE)
+manual_punch = None
 
-short_opts = "hcprst"
-long_opts = ["categories", "help", "print", "running", "stop", "switch", "total"]
+short_opts = "hcm:prst"
+long_opts = ["categories", "help", "manual=", "print", "running", "stop", "switch", "total"]
 try:
     (opts, args) = getopt(argv[1:], short_opts, long_opts)
 except GetoptError as ge:
@@ -38,6 +39,8 @@ for (opt, optarg) in opts:
         print("Command line arguments: {0}"
               .format(", ".join(sorted(long_opts))))
         exit(0)
+    elif opt in ["m", "manual"]:
+        manual_punch = int(optarg)
     elif opt in ["p", "print"]:
         display_times(clock)
         exit(0)
@@ -64,4 +67,4 @@ if not args:
 
 category = args[0]
 
-clock.punch(category)
+clock.punch(category, manual_punch)
