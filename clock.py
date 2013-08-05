@@ -73,9 +73,13 @@ class Clock:
                 suffix = " seconds ({0:.2f} hrs)".format(total_time/3600.)
             print("{0}: {1}{2}".format(cat, total_time, suffix))
 
-    def punch(self, category):
+    def punch(self, category, timestamp=None):
+        if not timestamp:
+            _timestamp = get_timestamp()
+        else:
+            _timestamp = timestamp
         with open(self.clock_filename, "a") as outfile:
-            outfile.write("{0}\t{1}\n".format(category, get_timestamp()))
+            outfile.write("{0}\t{1}\n".format(category, _timestamp))
 
     def running_tasks(self):
         running = []
