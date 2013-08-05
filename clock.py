@@ -13,10 +13,12 @@ class Clock:
         with open(self.clock_filename, "r") as infile:
             for line in infile:
                 tokens = line.split()
-                if len(tokens) != 2:
-                    raise Exception("Broken line: {0}".format(line))
+                if not tokens:
+                    continue
                 if tokens[0][0] == '#':
                     continue
+                if len(tokens) != 2:
+                    raise Exception("Broken line: {0}".format(line))
                 cat = tokens[0]
                 timestamp = int(tokens[1])
                 if not tokens[0] in self.categories:
