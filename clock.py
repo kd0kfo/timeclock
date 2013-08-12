@@ -65,6 +65,7 @@ class Clock:
             categories = sorted(self.categories)
         else:
             categories = self.categories
+        elapsed_time = self.total_time()
         for cat in categories:
             if query and cat != query:
                 continue
@@ -72,10 +73,10 @@ class Clock:
             total_time = self.total_time(cat)
             suffix = str(total_time)
             if len(self.categories[cat]) % 2 != 0:
-                suffix = "+ seconds ({0:.2f} hrs)".format(total_time/3600.)
+                suffix = "+ seconds\t{0:.2f} hrs".format(total_time/3600.)
             else:
-                suffix = " seconds ({0:.2f} hrs)".format(total_time/3600.)
-            print("{0}: {1}{2}".format(cat, total_time, suffix))
+                suffix = " seconds\t{0:.2f} hrs".format(total_time/3600.)
+            print("{0}: {1}{2}\t{3:0.2f}%".format(cat, total_time, suffix, 100.*total_time/elapsed_time))
 
     def punch(self, category, timestamp=None):
         if not timestamp:
