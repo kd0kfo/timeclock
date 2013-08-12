@@ -71,16 +71,16 @@ if command == "categories":
     print(", ".join(sorted(clock.get_categories())))
 elif command == "print":
     display_times(clock)
+elif command == "running":
+    now = get_timestamp()
+    for task in clock.running_tasks():
+        print("{0}: {1} seconds".format(task[0], now - task[1]))
+elif command == "stop":
+    stop_all(clock)
 elif command == "total":
     times = sorted(clock.get_timestamps())
     print("Started on {0}".format(times[0]))
     print("Last punch on {0}".format(times[-1]))
     print("Total time span: {0} seconds".format(times[-1] - times[0]))
-elif command == "stop":
-    stop_all(clock)
-elif command == "running":
-    now = get_timestamp()
-    for task in clock.running_tasks():
-        print("{0}: {1} seconds".format(task[0], now - task[1]))
 else:
     clock.punch(command, manual_punch)
