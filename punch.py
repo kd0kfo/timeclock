@@ -83,4 +83,6 @@ elif command == "total":
     print("Last punch on {0}".format(times[-1]))
     print("Total time span: {0} seconds".format(times[-1] - times[0]))
 else:
+    if should_switch:
+        stop_all(clock)
     clock.punch(command, manual_punch)
