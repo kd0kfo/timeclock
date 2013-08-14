@@ -14,9 +14,9 @@ def display_times(_clock):
           .format(total_time, total_time/3600.))
 
 
-def stop_all(clock):
+def stop_all(clock, punch_time=None):
     for task in clock.running_tasks():
-        clock.punch(task[0])
+        clock.punch(task[0], punch_time)
 
 
 CLOCK_FILE = "clock.dat"
@@ -76,7 +76,7 @@ elif command == "running":
     for task in clock.running_tasks():
         print("{0}: {1} seconds".format(task[0], now - task[1]))
 elif command == "stop":
-    stop_all(clock)
+    stop_all(clock, manual_punch)
 elif command == "total":
     times = sorted(clock.get_timestamps())
     print("Started on {0}".format(times[0]))
@@ -84,5 +84,5 @@ elif command == "total":
     print("Total time span: {0} seconds".format(times[-1] - times[0]))
 else:
     if should_switch:
-        stop_all(clock)
+        stop_all(clock, manual_punch)
     clock.punch(command, manual_punch)
