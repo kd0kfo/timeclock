@@ -102,3 +102,33 @@ class Clock:
         for times in self.categories.itervalues():
             all_timestamps.extend(times)
         return all_timestamps
+
+    
+    def largest_running_time(self, category):
+        if not category in self.categories:
+            raise Exception("{0} is not a known category".format(category))
+
+        largest = None
+        times = self.categories[category]
+        
+        idx = 0
+        len(times)
+        num_times = len(times)
+        while idx < num_times:
+            start = times[idx]
+            idx += 1
+            if idx >= num_times:
+                stop = get_timestamp()
+            else:
+                stop = times[idx]
+            idx += 1
+            
+            thetime = stop - start
+            
+            if largest is None:
+                largest = (thetime, start, stop)
+            else:
+                if thetime > largest[0]:
+                    largest = (thetime, start, stop)
+                    
+        return largest
