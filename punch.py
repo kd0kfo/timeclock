@@ -28,6 +28,7 @@ should_switch = False
 short_opts = "f:hm:s"
 long_opts = ["file", "help", "manual=", "switch"]
 commands = {"categories": "List categories in clock",
+            "longest": "Print the longest time period in category", 
             "print": "Print time summary",
             "running": "List all running processes",
             "stop": "Stop all running processes",
@@ -69,6 +70,10 @@ command = args[0]
 
 if command == "categories":
     print(", ".join(sorted(clock.get_categories())))
+elif command == "longest":
+    longest = clock.largest_running_time(args[1])
+    if longest:
+        print("Longest time {0} seconds was started on {1} and ended on {2}".format(longest[0], longest[1], longest[2]))
 elif command == "print":
     display_times(clock)
 elif command == "running":
