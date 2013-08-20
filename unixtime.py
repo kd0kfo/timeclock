@@ -2,13 +2,13 @@
 
 from sys import argv
 from time import mktime
-from datetime import datetime
+from datetime import datetime, date
 
-time_str = " ".join(argv[1:])
-
-fmt = "%Y%m%d"
-if len(argv) > 2:
-    fmt += " %H:%M"
+fmt = "%Y%m%d %H:%M"
+if len(argv) < 3:
+    time_str = " ".join([date.today().strftime("%Y%m%d"), argv[1]])
+else:
+    time_str = " ".join(argv[1:])
 
 unixtime = mktime(datetime.strptime(time_str, fmt).timetuple())
 
