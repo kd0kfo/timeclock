@@ -63,17 +63,21 @@ class Clock:
             categories = self.categories
         elapsed_time = self.total_time()
         named_categories = {}
+        missing_names = []
         for cat in categories:
             if query and cat != query:
                 continue
 
             total_time = self.total_time(cat)
-            if name_map and cat in name_map:
-                alias = name_map[cat]
-                if alias in named_categories:
-                    named_categories[alias] += total_time
+            if name_map:
+                if cat in name_map:
+                    alias = name_map[cat]
+                    if alias in named_categories:
+                        named_categories[alias] += total_time
+                    else:
+                        named_categories[alias] = total_time
                 else:
-                    named_categories[alias] = total_time
+                    missing_names.append(cat)
 
             suffix = str(total_time)
             if len(self.categories[cat]) % 2 != 0:
@@ -91,7 +95,13 @@ class Clock:
             print("Effort Categories:")
 
             for effort in named_categories:
-                print("{}: {:0.2f} hours".format(effort, named_categories[effort] / 3600.))
+                print("{}: {:0.2f} hours"
+                      .format(effort, named_categories[effort] / 3600.))
+
+            if missing_names:
+                print("")
+                print("Missing categories in name list: {}"
+                      .format(", ".join(missing_names)))
 
     def punch(self, category, timestamp=None):
         from timeclock import get_timestamp
