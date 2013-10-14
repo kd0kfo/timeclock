@@ -1,10 +1,4 @@
 
-
-def get_timestamp():
-    import time
-    return int(time.time())
-
-
 class Clock:
     def load(self, filename=None):
         if filename:
@@ -36,6 +30,8 @@ class Clock:
 
     def total_time(self, category=None):
         def get_total_time(category):
+            from timeclock import get_timestamp
+
             punches = self.categories[category]
             elapsed_time = 0
             length = len(punches)
@@ -79,6 +75,7 @@ class Clock:
             print("{0}: {1}{2}\t{3:0.2f}%".format(cat, total_time, suffix, 100.*total_time/elapsed_time))
 
     def punch(self, category, timestamp=None):
+        from timeclock import get_timestamp
         if not timestamp:
             _timestamp = get_timestamp()
         else:
@@ -105,6 +102,7 @@ class Clock:
 
     
     def largest_running_time(self, category):
+        from timeclock import get_timestamp
         if not category in self.categories:
             raise Exception("{0} is not a known category".format(category))
 

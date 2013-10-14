@@ -4,6 +4,10 @@ from sys import argv
 from time import mktime
 from datetime import datetime, date
 
+if "-h" in " ".join(argv):
+    print("Usage: unixtime.py [YYYYmmdd] HH:MM")
+    exit(0)
+
 fmt = "%Y%m%d %H:%M"
 if len(argv) < 3:
     time_str = " ".join([date.today().strftime("%Y%m%d"), argv[1]])

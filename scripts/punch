@@ -1,9 +1,26 @@
 #!/usr/bin/env python
 
-from os.path import isfile
+from os.path import isfile, join
+from os import getenv, getcwd
 from sys import argv
-from clock import Clock, get_timestamp
+from timeclock.clock import Clock
+from timeclock import get_timestamp
 from getopt import getopt, GetoptError
+
+
+DEFAULT_CLOCK_FILE = "clock.dat"
+clock_path = join(getcwd(), DEFAULT_CLOCK_FILE)
+
+
+def load_config(config_path):
+    import ConfigParser
+    global clock_path
+
+    config = ConfigParser.RawConfigParser()
+    config.read(config_path)
+
+    if config.has_option("main", "clock_path"):
+        clock_path = config.get("main", "clock_path")
 
 
 def display_times(_clock):
@@ -19,9 +36,14 @@ def stop_all(clock, punch_time=None):
         clock.punch(task[0], punch_time)
 
 
-CLOCK_FILE = "clock.dat"
+CONFIG_FILENAME = ".timeclockrc"
+HOMEDIR = getenv("HOME")
+config_path = join(HOMEDIR, CONFIG_FILENAME)
+if HOMEDIR and isfile(config_path):
+    load_config(config_path)
 
-clock = Clock(CLOCK_FILE)
+
+clock = Clock(clock_path)
 manual_punch = None
 should_switch = False
 
