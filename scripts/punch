@@ -23,12 +23,12 @@ def load_config(config_path):
         clock_path = config.get("main", "clock_path")
 
 
-def display_times(_clock):
-    _clock.print_times(alphabetic=True)
+def display_times(_clock, name_map=None):
+    _clock.print_times(alphabetic=True, name_map=name_map)
     total_time = _clock.total_time()
     print("---")
     print("Total counted time: {0} seconds ({1:.2f} hrs)"
-          .format(total_time, total_time/3600.))
+          .format(total_time, total_time / 3600.))
 
 
 def stop_all(clock, punch_time=None):
@@ -46,9 +46,10 @@ if HOMEDIR and isfile(config_path):
 clock = Clock(clock_path)
 manual_punch = None
 should_switch = False
+name_map = {}
 
-short_opts = "f:hm:s"
-long_opts = ["file", "help", "manual=", "switch"]
+short_opts = "f:hm:n:s"
+long_opts = ["file", "help", "manual=", "names=", "switch"]
 commands = {"categories": "List categories in clock",
             "longest": "Print the longest time period in category", 
             "print": "Print time summary",
@@ -79,12 +80,15 @@ for (opt, optarg) in opts:
         exit(0)
     elif opt in ["m", "manual"]:
         manual_punch = int(optarg)
+    elif opt in ["n", "names"]:
+        from timeclock import load_name_map
+        name_map.update(load_name_map(optarg))
     elif opt in ["s", "switch"]:
         should_switch = True
 
 
 if not args:
-    display_times(clock)
+    display_times(clock, name_map)
     exit(0)
 
 
@@ -95,9 +99,10 @@ if command == "categories":
 elif command == "longest":
     longest = clock.largest_running_time(args[1])
     if longest:
-        print("Longest time {0} seconds was started on {1} and ended on {2}".format(longest[0], longest[1], longest[2]))
+        print("Longest time {0} seconds was started on {1} and ended on {2}"
+              .format(longest[0], longest[1], longest[2]))
 elif command == "print":
-    display_times(clock)
+    display_times(clock, name_map)
 elif command == "running":
     now = get_timestamp()
     for task in clock.running_tasks():

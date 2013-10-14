@@ -56,23 +56,42 @@ class Clock:
             return elapsed_time
         return get_total_time(category)
 
-    def print_times(self, query=None, alphabetic=False):
+    def print_times(self, query=None, alphabetic=False, name_map=None):
         if alphabetic:
             categories = sorted(self.categories)
         else:
             categories = self.categories
         elapsed_time = self.total_time()
+        named_categories = {}
         for cat in categories:
             if query and cat != query:
                 continue
 
             total_time = self.total_time(cat)
+            if name_map and cat in name_map:
+                alias = name_map[cat]
+                if alias in named_categories:
+                    named_categories[alias] += total_time
+                else:
+                    named_categories[alias] = total_time
+
             suffix = str(total_time)
             if len(self.categories[cat]) % 2 != 0:
-                suffix = "+ seconds\t{0:.2f} hrs".format(total_time/3600.)
+                suffix = "+ seconds\t{0:.2f} hrs".format(total_time / 3600.)
             else:
-                suffix = " seconds\t{0:.2f} hrs".format(total_time/3600.)
-            print("{0}: {1}{2}\t{3:0.2f}%".format(cat, total_time, suffix, 100.*total_time/elapsed_time))
+                suffix = " seconds\t{0:.2f} hrs".format(total_time / 3600.)
+            print("{0}: {1}{2}\t{3:0.2f}%"
+                  .format(cat,
+                          total_time,
+                          suffix,
+                          100. * total_time / elapsed_time))
+
+        if named_categories:
+            print("")
+            print("Effort Categories:")
+
+            for effort in named_categories:
+                print("{}: {:0.2f} hours".format(effort, named_categories[effort] / 3600.))
 
     def punch(self, category, timestamp=None):
         from timeclock import get_timestamp

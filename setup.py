@@ -5,7 +5,7 @@ from setuptools import setup
 the_scripts = ['scripts/punch', 'scripts/unixtime.py']
 
 setup (name ='timeclock',
-       version = '1.0.0',
+       version = '1.1.0',
        url = 'http://code.davecoss.com',
        license = 'GPL v3',
        description = 'Time clock program',
