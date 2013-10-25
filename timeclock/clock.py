@@ -1,4 +1,5 @@
 
+
 class Clock:
     def load(self, filename=None):
         if filename:
@@ -129,7 +130,14 @@ class Clock:
             all_timestamps.extend(times)
         return all_timestamps
 
-    
+    def last_punch(self):
+        last = None
+        for (category, last_punch) in self.running_tasks():
+            if last is None or last_punch > last[1]:
+                last = (category, last_punch)
+
+        return last
+
     def largest_running_time(self, category):
         from timeclock import get_timestamp
         if not category in self.categories:
@@ -137,7 +145,7 @@ class Clock:
 
         largest = None
         times = self.categories[category]
-        
+
         idx = 0
         len(times)
         num_times = len(times)
@@ -149,13 +157,13 @@ class Clock:
             else:
                 stop = times[idx]
             idx += 1
-            
+
             thetime = stop - start
-            
+
             if largest is None:
                 largest = (thetime, start, stop)
             else:
                 if thetime > largest[0]:
                     largest = (thetime, start, stop)
-                    
+
         return largest

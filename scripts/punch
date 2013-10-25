@@ -51,7 +51,8 @@ name_map = {}
 short_opts = "f:hm:n:s"
 long_opts = ["file", "help", "manual=", "names=", "switch"]
 commands = {"categories": "List categories in clock",
-            "longest": "Print the longest time period in category", 
+            "last": "Last punch",
+            "longest": "Print the longest time period in category",
             "print": "Print time summary",
             "running": "List all running processes",
             "stop": "Stop all running processes",
@@ -96,6 +97,16 @@ command = args[0]
 
 if command == "categories":
     print(", ".join(sorted(clock.get_categories())))
+elif command == "last":
+    last_punch = clock.last_punch()
+    if last_punch:
+        import time
+        timestring = time.strftime("%Y-%m-%d %H:%M",
+                                   time.localtime(last_punch[1]))
+        print("Last punch: {0} at {1}"
+              .format(last_punch[0], timestring))
+    else:
+        print("No punch yet")
 elif command == "longest":
     longest = clock.largest_running_time(args[1])
     if longest:
