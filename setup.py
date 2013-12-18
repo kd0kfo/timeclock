@@ -1,6 +1,26 @@
 #!/usr/bin/env python
 
-from setuptools import setup
+from setuptools import setup, Command
+
+class Tester(Command):
+    user_options = []
+
+    def initialize_options(self):
+        import os
+        self._dir = os.getcwd()
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        import test
+        print("Testing date2unix")
+        if not test.test_date2unix("20131218 10:32"):
+            print("FAILED")
+            exit(1)
+        else:
+            print("Success!")
+
 
 the_scripts = ['scripts/punch', 'scripts/date2unix']
 
@@ -13,5 +33,6 @@ setup (name ='timeclock',
        author_email='David.Coss@stjude.org',
        packages = ['timeclock'],
        scripts = the_scripts,
+       cmdclass={'test': Tester}
        )
 
