@@ -10,10 +10,14 @@ def test_function(function):
 
     return tester
 
+
+def run_command(cmd):
+    import shlex
+    import subprocess
+    return subprocess.check_output(shlex.split(cmd))
+
 @test_function
 def date2unix():
-    import subprocess
-    import shlex
     import time
     from datetime import datetime as DT
 
@@ -26,8 +30,7 @@ def date2unix():
     print("Current Date Time: %s" % currdatetime)
 
     # Run script
-    cmd = "date2unix %s" % currdatetime
-    unixtime = subprocess.check_output(shlex.split(cmd))
+    unixtime = run_command("date2unix %s" % currdatetime)
     unixtime = unixtime.strip()
     unixtime = int(unixtime)
 
@@ -35,3 +38,5 @@ def date2unix():
     retval = (unixtime == currunixtime)
     print("Calculated Unix Time: %d" % unixtime)
     return retval
+
+
