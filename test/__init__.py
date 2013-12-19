@@ -1,11 +1,24 @@
-def test_date2unix(datetime):
+def test_date2unix():
     import subprocess
     import shlex
+    import time
+    from datetime import datetime as DT
 
-    cmd = "date2unix %s" % datetime
-    output = subprocess.check_output(shlex.split(cmd))
-    output = output.strip()
-    retval = (output == "1387384320")
-    if not retval:
-        print("OUTPUT: %s" % output)
+    # Get current time data
+    currunixtime = int(time.time())
+    currdatetime = DT.fromtimestamp(currunixtime).strftime('%Y%m%d %H:%M')
+    secoffset = DT.fromtimestamp(currunixtime).strftime('%S')
+    currunixtime -= int(secoffset)
+    print("Current Unix Time: %d" % currunixtime)
+    print("Current Date Time: %s" % currdatetime)
+
+    # Run script
+    cmd = "date2unix %s" % currdatetime
+    unixtime = subprocess.check_output(shlex.split(cmd))
+    unixtime = unixtime.strip()
+    unixtime = int(unixtime)
+
+    # Compare
+    retval = (unixtime == currunixtime)
+    print("Calculated Unix Time: %d" % unixtime)
     return retval
