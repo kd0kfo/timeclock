@@ -15,11 +15,8 @@ class Tester(Command):
     def run(self):
         import test
         print("Testing date2unix")
-        if not test.test_date2unix():
-            print("FAILED")
-            exit(1)
-        else:
-            print("Success!")
+
+        test.date2unix()
 
 
 the_scripts = ['scripts/punch', 'scripts/date2unix']

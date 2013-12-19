@@ -1,4 +1,17 @@
-def test_date2unix():
+def test_function(function):
+    def tester():
+        retval = function()
+        if not retval:
+                print("FAILED")
+                exit(1)
+        else:
+            print("Success!")
+        return retval
+
+    return tester
+
+@test_function
+def date2unix():
     import subprocess
     import shlex
     import time
