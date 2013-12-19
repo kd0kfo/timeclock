@@ -71,4 +71,10 @@ def summary():
     print(output)
     expected = "Total counted time: 4 seconds (0.00 hrs)"
 
-    return (expected in output)
+    # Allow the CI server to be a bit slow.
+    expected_drift1 = "Total counted time: 5 seconds (0.00 hrs)"
+    expected_drift2 = "Total counted time: 6 seconds (0.00 hrs)"
+
+    return ((expected in output)
+            or (expected_drift1 in output)
+            or (expected_drift2 in output))
