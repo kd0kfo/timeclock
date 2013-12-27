@@ -98,8 +98,11 @@ class Clock:
             print("Effort Categories:")
 
             for effort in named_categories:
-                print("{}: {:0.2f} hours"
-                      .format(effort, named_categories[effort] / 3600.))
+                suffix = ""
+                if payrate is not None:
+                    suffix += " ${0:.2f}".format(payrate * named_categories[effort] / 3600.)
+                print("{0}: {1:0.2f} hours {2}"
+                      .format(effort, named_categories[effort] / 3600., suffix))
 
             if missing_names:
                 print("")
