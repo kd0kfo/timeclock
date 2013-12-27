@@ -10,7 +10,7 @@ from getopt import getopt, GetoptError
 
 DEFAULT_CLOCK_FILE = "clock.dat"
 clock_path = join(getcwd(), DEFAULT_CLOCK_FILE)
-
+payrate = None
 
 def load_config(config_path):
     import ConfigParser
@@ -24,7 +24,7 @@ def load_config(config_path):
 
 
 def display_times(_clock, name_map=None):
-    _clock.print_times(alphabetic=True, name_map=name_map)
+    _clock.print_times(alphabetic=True, name_map=name_map, payrate=payrate)
     total_time = _clock.total_time()
     print("---")
     print("Total counted time: {0} seconds ({1:.2f} hrs)"
@@ -48,8 +48,8 @@ manual_punch = None
 should_switch = False
 name_map = {}
 
-short_opts = "f:hm:n:s"
-long_opts = ["file", "help", "manual=", "names=", "switch"]
+short_opts = "f:hm:n:p:s"
+long_opts = ["file", "help", "manual=", "names=", "payrate=", "switch"]
 commands = {"categories": "List categories in clock",
             "last": "Last punch",
             "longest": "Print the longest time period in category",
@@ -86,6 +86,8 @@ for (opt, optarg) in opts:
         name_map.update(load_name_map(optarg))
     elif opt in ["s", "switch"]:
         should_switch = True
+    elif opt in ["p", "payrate"]:
+        payrate = float(optarg)
 
 
 if not args:

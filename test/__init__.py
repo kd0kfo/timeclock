@@ -67,7 +67,7 @@ def punchout():
 
 @test_function
 def summary():
-    output = run_command("punch -f %s" % TEST_CLOCK_FILE)
+    output = run_command("punch -f %s -p 42" % TEST_CLOCK_FILE)
     print(output)
     expected = "Total counted time: 4 seconds (0.00 hrs)"
 

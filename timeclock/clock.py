@@ -57,7 +57,7 @@ class Clock:
             return elapsed_time
         return get_total_time(category)
 
-    def print_times(self, query=None, alphabetic=False, name_map=None):
+    def print_times(self, query=None, alphabetic=False, name_map=None, payrate=None):
         if alphabetic:
             categories = sorted(self.categories)
         else:
@@ -85,6 +85,8 @@ class Clock:
                 suffix = "+ seconds\t{0:.2f} hrs".format(total_time / 3600.)
             else:
                 suffix = " seconds\t{0:.2f} hrs".format(total_time / 3600.)
+            if payrate is not None:
+                suffix += " ${0:.2f}".format(payrate * (total_time / 3600.))
             print("{0}: {1}{2}\t{3:0.2f}%"
                   .format(cat,
                           total_time,
