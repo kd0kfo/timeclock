@@ -52,6 +52,7 @@ short_opts = "f:hm:n:p:s"
 long_opts = ["file", "help", "manual=", "names=", "payrate=", "switch"]
 commands = {"categories": "List categories in clock",
             "last": "Last punch",
+            "list": "List all punches with human readable time",
             "longest": "Print the longest time period in category",
             "print": "Print time summary",
             "running": "List all running processes",
@@ -109,6 +110,12 @@ elif command == "last":
               .format(last_punch[0], timestring))
     else:
         print("No punch yet")
+elif command == "list":
+    for punch in open(clock.clock_filename, "r"):
+        import time
+        (category, unixtime) = punch.strip().split()
+        unixtime = float(unixtime)
+        print("%s\t%s" % (category, time.strftime("%Y-%m-%d %H:%M", time.localtime(unixtime))))
 elif command == "longest":
     longest = clock.largest_running_time(args[1])
     if longest:

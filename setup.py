@@ -36,7 +36,7 @@ class Tester(Command):
 the_scripts = ['scripts/punch', 'scripts/date2unix']
 
 setup (name ='timeclock',
-       version = '1.4.0',
+       version = '1.5.0',
        url = 'http://code.davecoss.com',
        license = 'GPL v3',
        description = 'Time clock program',
