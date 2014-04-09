@@ -11,7 +11,7 @@ def load_name_map(map_file_path):
     config.read(map_file_path)
 
     if not config.has_section("effort"):
-        raise Exception("Missing effort in {}".format(map_file_path))
+        raise Exception("Missing effort in {0}".format(map_file_path))
 
     retval = {}
     for options in config.items("effort"):

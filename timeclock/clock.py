@@ -106,7 +106,7 @@ class Clock:
 
             if missing_names:
                 print("")
-                print("Missing categories in name list: {}"
+                print("Missing categories in name list: {0}"
                       .format(", ".join(missing_names)))
 
     def punch(self, category, timestamp=None):
